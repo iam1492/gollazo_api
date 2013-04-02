@@ -2,7 +2,7 @@ require "bundler/capistrano"
 
 server "14.63.162.85", :web, :app, :db, primary: true
 
-set :application, "gollozo_api"
+set :application, "gollazo_api"
 set :user, "deployer"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
