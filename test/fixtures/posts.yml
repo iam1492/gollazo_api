@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  category_code: 1
+  title: MyString
+  description: MyString
+  url_1: MyString
+  url_2: MyString
+  url_3: MyString
+  url_4: MyString
+
+two:
+  category_code: 1
+  title: MyString
+  description: MyString
+  url_1: MyString
+  url_2: MyString
+  url_3: MyString
+  url_4: MyString
