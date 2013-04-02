@@ -11,6 +11,12 @@ gem 'acts_as_api'
 gem 'will_paginate', '~> 3.0'
 gem "paperclip", "~> 3.0"
 
+# Use unicorn as the app server
+gem 'unicorn'
+
+# Deploy with Capistrano
+gem 'capistrano'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
