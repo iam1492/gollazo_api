@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: gollozo_development
+  database: gollazo_development
   encoding: unicode
   pool: 5
   username: iam1492
