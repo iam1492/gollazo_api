@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
-  attr_accessible :fb_id, :first_name, :gender,
+  attr_accessible :fb_id, :first_name, :gender, :access_token,
    :last_name, :name, :profile_thumbnail_url, :profile_url
-  
-  acts_as_api
 
+  acts_as_api
+  acts_as_voter
   has_many :posts, dependent: :destroy
 
   api_accessible :render_user do |t|
@@ -16,4 +16,12 @@ class User < ActiveRecord::Base
   	t.add :profile_thumbnail_url
     t.add :profile_url
   end
+
+  def self.current
+    Thread.current[:user]
+  end
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
 end

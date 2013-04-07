@@ -10,6 +10,7 @@ gem 'pg'
 gem 'acts_as_api'
 gem 'will_paginate', '~> 3.0'
 gem "paperclip", "~> 3.0"
+gem 'acts_as_votable', '~> 0.5.0'
 
 # Use unicorn as the app server
 gem 'unicorn'

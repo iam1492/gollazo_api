@@ -5,6 +5,8 @@ class Post < ActiveRecord::Base
   				  :photo1, :photo2, :photo3, :photo4,
   				  :user_id
   acts_as_api		  
+  acts_as_votable
+
   self.per_page = 20
 
   has_attached_file :photo1, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
@@ -27,12 +29,15 @@ class Post < ActiveRecord::Base
     t.add :vote_count_3
     t.add :vote_count_4
     t.add :rank
-    t.add :photo1
-    t.add :photo2
-    t.add :photo3
-    t.add :photo4
+    t.add :photo1_path
+    t.add :photo2_path
+    t.add :photo3_path
+    t.add :photo4_path
     t.add :total_comments
     t.add :comments
+    t.add :has_voted
+    t.add :profile_thumb_path
+    t.add :username
   end
 
   api_accessible :render_post_list do |t| 
@@ -50,6 +55,33 @@ class Post < ActiveRecord::Base
     t.add :photo3_thumb_path
     t.add :photo4_thumb_path
     t.add :total_comments
+    t.add :has_voted
+    t.add :profile_thumb_path
+    t.add :username
+  end
+
+  def username
+    user = User.current
+    if (user.nil?)
+      return ""
+    end
+    user.name
+  end
+
+  def profile_thumb_path
+    user = User.current
+    if (user.nil?)
+      return ""
+    end
+    user.profile_thumbnail_url
+  end
+
+  def has_voted
+    user = User.current
+    if (user.nil?)
+      return false
+    end
+    user.voted_up_on?(self)
   end
 
   def total_comments
