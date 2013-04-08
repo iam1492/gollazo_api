@@ -11,15 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130407113545) do
+ActiveRecord::Schema.define(:version => 20130408070109) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
     t.integer  "post_id"
     t.integer  "selected_num"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "imei",         :default => ""
   end
 
   create_table "posts", :force => true do |t|
@@ -51,25 +52,26 @@ ActiveRecord::Schema.define(:version => 20130407113545) do
     t.string   "photo4_content_type"
     t.integer  "photo4_file_size"
     t.datetime "photo4_updated_at"
+    t.string   "imei",                :default => ""
   end
 
   add_index "posts", ["category_code"], :name => "index_posts_on_category_code"
 
   create_table "users", :force => true do |t|
-    t.string   "fb_id",                                 :null => false
-    t.string   "first_name",            :default => ""
-    t.string   "last_name",             :default => ""
     t.string   "name",                  :default => ""
-    t.string   "gender",                :default => ""
     t.string   "profile_url",           :default => ""
     t.string   "profile_thumbnail_url", :default => ""
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.string   "access_token",          :default => ""
+    t.string   "imei",                  :default => ""
+    t.string   "intro",                 :default => ""
+    t.string   "profile_file_name"
+    t.string   "profile_content_type"
+    t.integer  "profile_file_size"
+    t.datetime "profile_updated_at"
   end
 
-  add_index "users", ["access_token"], :name => "index_users_on_access_token"
-  add_index "users", ["fb_id"], :name => "index_users_on_fb_id", :unique => true
+  add_index "users", ["imei"], :name => "index_users_on_imei"
 
   create_table "votes", :force => true do |t|
     t.integer  "votable_id"

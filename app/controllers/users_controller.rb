@@ -1,15 +1,5 @@
 class UsersController < ApiController
 
-  def loggin
-    user = User.find_by_fb_id(:fb_id)
-    if (user)
-      session[:user_id] = user.id
-      render :json=>{:success => true, :message=>"success to loggin"}
-    else
-      render :json=>{:success => false, :message=>"fail to loggin"}
-    end
-  end
-
 	def create
   	@user = User.new(params[:user])
 
@@ -22,10 +12,19 @@ class UsersController < ApiController
     end
   end
 
+  def checkUniqueness
+    @name = params[:name]
+    if (User.uniqueName?(@name))
+      render :json=>{:success => true, :message=>"success", :occupied=>false}
+    else
+      render :json=>{:success => true, :message=>"failed", :occupied=>true}
+    end
+  end
+
   def getUserInfo
 
-  	@id = params[:id]
-  	@user = User.find(@id)
+  	@imei = params[:imei]
+  	@user = User.cachedUserInfo(@imei)
 
   	if (@user.nil?)
       render :json=>{:success => false, :message=>"fail to get user."}
@@ -45,7 +44,4 @@ class UsersController < ApiController
     end
   end
 
-  def destroy
-    session[:user_id] = nil
-  end
 end

@@ -4,6 +4,7 @@ class Post < ActiveRecord::Base
   				  :rank,
   				  :photo1, :photo2, :photo3, :photo4,
   				  :user_id
+            :imei
   acts_as_api		  
   acts_as_votable
 
@@ -36,8 +37,9 @@ class Post < ActiveRecord::Base
     t.add :total_comments
     t.add :comments
     t.add :has_voted
-    t.add :profile_thumb_path
-    t.add :username
+    t.add :profile_thumbnail_url
+    t.add :name
+    t.add :imei
   end
 
   api_accessible :render_post_list do |t| 
@@ -56,32 +58,59 @@ class Post < ActiveRecord::Base
     t.add :photo4_thumb_path
     t.add :total_comments
     t.add :has_voted
-    t.add :profile_thumb_path
-    t.add :username
+    t.add :profile_thumbnail_url
+    t.add :name
+    t.add :imei
   end
 
-  def username
-    user = User.current
-    if (user.nil?)
+  def name
+    if (self.imei.nil?)
       return ""
     end
-    user.name
+    
+    @user = User.cachedUserInfo(self.imei)
+    if (@user.nil?)
+      @user = User.getUserInfo(self.imei);
+    end
+    
+    if (@user.nil?)
+      return ""
+    end
+
+    @user.name
   end
 
-  def profile_thumb_path
-    user = User.current
-    if (user.nil?)
+  def profile_thumbnail_url
+    
+    if (self.imei.nil?)
       return ""
     end
-    user.profile_thumbnail_url
+    
+    @user = User.cachedUserInfo(self.imei)
+    if (@user.nil?)
+      @user = User.getUserInfo(self.imei);
+    end
+    
+    if (@user.nil?)
+      return ""
+    end
+
+    @user.profile_thumbnail_url
   end
 
   def has_voted
-    user = User.current
-    if (user.nil?)
-      return false
+    if (self.imei.nil?)
+      return ""
     end
-    user.voted_up_on?(self)
+    @user = User.cachedUserInfo(self.imei)
+    if (@user.nil?)
+      @user = User.getUserInfo(self.imei);
+    end
+    
+    if (@user.nil?)
+      return ""
+    end
+    @user.voted_up_on?(self)
   end
 
   def total_comments
