@@ -1,6 +1,5 @@
 class PostsController < ApiController
   respond_to :json, :xml
-  before_filter :set_current_user
   def create 
   	@post = Post.new(params[:post])
 

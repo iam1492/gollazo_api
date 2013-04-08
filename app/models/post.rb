@@ -3,8 +3,10 @@ class Post < ActiveRecord::Base
   				  :vote_count_1, :vote_count_2, :vote_count_3, :vote_count_4, 
   				  :rank,
   				  :photo1, :photo2, :photo3, :photo4,
-  				  :user_id
-            :imei
+  				  :user_id,
+            :imei,
+            :item_count
+
   acts_as_api		  
   acts_as_votable
 

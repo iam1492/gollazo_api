@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408070109) do
+ActiveRecord::Schema.define(:version => 20130408122646) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(:version => 20130408070109) do
     t.integer  "category_code"
     t.string   "title"
     t.string   "description"
-    t.integer  "vote_count_1"
-    t.integer  "vote_count_2"
-    t.integer  "vote_count_3"
-    t.integer  "vote_count_4"
+    t.integer  "vote_count_1",        :default => 0
+    t.integer  "vote_count_2",        :default => 0
+    t.integer  "vote_count_3",        :default => 0
+    t.integer  "vote_count_4",        :default => 0
     t.string   "rank"
     t.integer  "user_id"
     t.datetime "created_at",                             :null => false
@@ -53,6 +53,11 @@ ActiveRecord::Schema.define(:version => 20130408070109) do
     t.integer  "photo4_file_size"
     t.datetime "photo4_updated_at"
     t.string   "imei",                :default => ""
+    t.string   "item_description_1",  :default => ""
+    t.string   "item_description_2",  :default => ""
+    t.string   "item_description_3",  :default => ""
+    t.string   "item_description_4",  :default => ""
+    t.integer  "item_count",          :default => 0
   end
 
   add_index "posts", ["category_code"], :name => "index_posts_on_category_code"
