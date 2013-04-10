@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   				  :photo1, :photo2, :photo3, :photo4,
             :imei,
             :item_count,
-            :item_description_1, item_description_2, item_description_3, item_description_4
+            :item_description_1, :item_description_2, :item_description_3, :item_description_4
 
   acts_as_api		  
   acts_as_votable
