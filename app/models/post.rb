@@ -3,7 +3,6 @@ class Post < ActiveRecord::Base
   				  :vote_count_1, :vote_count_2, :vote_count_3, :vote_count_4, 
   				  :rank,
   				  :photo1, :photo2, :photo3, :photo4,
-  				  :user_id,
             :imei,
             :item_count
 
@@ -17,10 +16,7 @@ class Post < ActiveRecord::Base
   has_attached_file :photo3, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
   has_attached_file :photo4, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
 	
-  belongs_to :user
   has_many :comments, dependent: :destroy
-
-  validates :user_id, presence: true
 
   api_accessible :render_post do |t| 
   	t.add :id
