@@ -12,10 +12,10 @@ class Post < ActiveRecord::Base
 
   self.per_page = 20
 
-  has_attached_file :photo1, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo2, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo3, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo4, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
+  has_attached_file :photo1, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
+  has_attached_file :photo2, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
+  has_attached_file :photo3, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
+  has_attached_file :photo4, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
 	
   has_many :comments, dependent: :destroy, :order => "created_at ASC"
 
