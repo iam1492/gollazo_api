@@ -35,7 +35,10 @@ class PostsController < ApiController
 
   def add_reply
 	@post = Post.find(params[:id])
-	@comment = @post.replies.build(:content => params[:content], :selected_num => params[:selected_num], :user_id => params[:user_id])
+	@comment = @post.comments.build(:content => params[:content],
+                                 :selected_num => params[:selected_num],
+                                 :imei => params[:imei]
+                                 )
 	if @post.save 
 	    render :json => {:success => true, :result_code => 0, :comment => @comment, :message => "succeed to create comment"}
 	else

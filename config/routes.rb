@@ -8,6 +8,7 @@ GollazoApi::Application.routes.draw do
   match 'posts(.format)' => "posts#create", :via => :post 
   match 'posts(.format)' => "posts#show", :via => :get
   match 'posts/get_post_by_category(.format)' => "posts#getPostsByCategory", :via => :get
+  match 'posts/add_comment(.format)' => "posts#add_reply", :via => :post 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

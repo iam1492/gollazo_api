@@ -1,8 +1,8 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :imei, :content, :post_id, :selected_num, :user_id
+  attr_accessible :id, :imei, :content, :post_id, :selected_num
   belongs_to :post
 
-  def name
+  def nickname
   	if (self.imei.nil?)
       return ""
     end
@@ -41,7 +41,7 @@ class Comment < ActiveRecord::Base
   def as_json options=nil
     options ||= {}
     options[:methods] = ((options[:methods] || []) + 
-           [:name, :profile_thumbnail_url])
+           [:nickname, :profile_thumbnail_url])
     super options
   end
 end

@@ -17,7 +17,7 @@ class Post < ActiveRecord::Base
   has_attached_file :photo3, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
   has_attached_file :photo4, :styles => { :medium => "720x", :thumb => "100x100>" }, :default_url => ""
 	
-  has_many :comments, dependent: :destroy
+  has_many :comments, dependent: :destroy, :order => "created_at ASC"
 
   api_accessible :render_post do |t| 
   	t.add :id
