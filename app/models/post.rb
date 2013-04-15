@@ -5,7 +5,8 @@ class Post < ActiveRecord::Base
   				  :photo1, :photo2, :photo3, :photo4,
             :imei,
             :item_count,
-            :item_description_1, :item_description_2, :item_description_3, :item_description_4
+            :item_description_1, :item_description_2, :item_description_3, :item_description_4,
+            :isBombed
 
   acts_as_api		  
   acts_as_votable
@@ -43,6 +44,7 @@ class Post < ActiveRecord::Base
     t.add :item_description_2
     t.add :item_description_3
     t.add :item_description_4
+    t.add :isBombed
   end
 
   api_accessible :render_post_list do |t| 
@@ -64,6 +66,7 @@ class Post < ActiveRecord::Base
     t.add :profile_thumbnail_url
     t.add :name
     t.add :imei
+    t.add :isBombed
   end
 
   def name
@@ -99,6 +102,18 @@ class Post < ActiveRecord::Base
     end
 
     @user.profile_thumbnail_url
+  end
+
+  def isMyPost?(_imei)
+    if (self.imei.nil?)
+      return false
+    end
+
+    if (_imei.eql? self.imei)
+      return true
+    else
+      return false
+    end
   end
 
   def has_voted

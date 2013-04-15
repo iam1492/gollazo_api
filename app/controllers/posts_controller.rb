@@ -33,6 +33,32 @@ class PostsController < ApiController
   	end
   end
 
+  def bombPost
+    @imei = params[:imei]
+    @post_id = params[:id]
+    @post = Post.find(@post_id)  
+    isMyPost = @post.isMyPost? @imei
+
+    if isMyPost
+      if (@post.isBombed)
+        render :json=>{:success => true, :result_code => 1, :message=>"already bombed post"}
+        return     
+      else
+        @post.isBombed = true
+        if @post.save
+          render :json=>{:success => true, :result_code => 0, :message=>"success to bomb"}
+          return     
+        else
+          render :json=>{:success => false, :result_code => 2, :message=>"fail to bomb"}
+          return     
+        end
+      end
+    else
+      render :json=>{:success => false, :result_code => 2, :message=>"no permission"}
+      return   
+    end
+  end
+
   def add_reply
   	@post = Post.find(params[:id])
     @imei = params[:imei]
