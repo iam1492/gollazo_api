@@ -37,9 +37,9 @@ class PostsController < ApiController
 	   return      
 	  end
 
-    @has_vote = @user.voted_up_on?(@post)
+    @has_voted = @user.voted_up_on?(@post)
 
-	  metadata = {:success => true, :message=>"success to get post detail.", :has_vote => @has_vote}
+	  metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted}
     respond_with(@post, :api_template => :render_post, :meta => metadata)  	
   end
 
