@@ -36,7 +36,6 @@ class Post < ActiveRecord::Base
     t.add :photo4_path
     t.add :total_comments
     t.add :comments
-    t.add :has_voted
     t.add :profile_thumbnail_url
     t.add :name
     t.add :imei
@@ -62,7 +61,6 @@ class Post < ActiveRecord::Base
     t.add :photo3_thumb_path
     t.add :photo4_thumb_path
     t.add :total_comments
-    t.add :has_voted
     t.add :profile_thumbnail_url
     t.add :name
     t.add :imei
@@ -114,21 +112,6 @@ class Post < ActiveRecord::Base
     else
       return false
     end
-  end
-
-  def has_voted
-    if (self.imei.nil?)
-      return ""
-    end
-    @user = User.cachedUserInfo(self.imei)
-    if (@user.nil?)
-      @user = User.getUserInfo(self.imei);
-    end
-    
-    if (@user.nil?)
-      return ""
-    end
-    @user.voted_up_on?(self)
   end
 
   def total_comments

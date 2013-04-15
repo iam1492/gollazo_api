@@ -14,12 +14,32 @@ class PostsController < ApiController
 
   def show
   	@post = Post.find(params[:id])
+    @imei = params[:imei]
+
+
+    if (@imei.nil?)
+      render :json=>{:success => false, :message=>"imei is nill"}
+      return
+    end
+
+    @user = User.cachedUserInfo(@imei)
+    if (@user.nil?)
+      @user = User.getUserInfo(@imei);
+    end
+    
+    if (@user.nil?)
+      render :json=>{:success => false, :message=>"cannot not find user"}
+      return
+    end
 
   	if (@post.nil?)
-	  render :json=>{:success => false, :message=>"cannot find post"}
-	  return      
-	end
-	metadata = {:success => true, :message=>"success to get replies."}
+	   render :json=>{:success => false, :message=>"cannot find post"}
+	   return      
+	  end
+
+    @has_vote = @user.voted_up_on?(@post)
+
+	  metadata = {:success => true, :message=>"success to get post detail.", :has_vote => @has_vote}
     respond_with(@post, :api_template => :render_post, :meta => metadata)  	
   end
 
