@@ -53,6 +53,16 @@ class PostsController < ApiController
   	end
   end
 
+  def getPostsByImei 
+    @posts = Post.where("imei = ?", params[:imei]).page(params[:page]).order('created_at DESC')
+    if (@posts.nil?)
+      render :json=>{:success => false, :message=>"fail to get posts."}
+    else
+      metadata = {:success => true, :message=>"success to get posts.", :posts_count => @posts.count}
+      respond_with(@posts, :api_template => :render_post_list, :root => :posts, :meta => metadata)
+    end
+  end
+
   def bombPost
     @imei = params[:imei]
     @post_id = params[:id]

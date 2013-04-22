@@ -10,5 +10,6 @@ GollazoApi::Application.routes.draw do
   match 'posts/get_post_by_category(.format)' => "posts#getPostsByCategory", :via => :get
   match 'posts/add_comment(.format)' => "posts#add_reply", :via => :post 
   match 'posts/bomb_post(.format)' => "posts#bombPost", :via => :post
- 
+  match 'posts/get_post_by_imei(.format)' => "posts#getPostsByImei", :via => :get
+  
 end
