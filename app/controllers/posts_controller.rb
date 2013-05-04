@@ -49,8 +49,9 @@ class PostsController < ApiController
 	  end
 
     @has_voted = @user.voted_up_on?(@post)
-
-	  metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted}
+    @selected_num = @post.getSelectedNum (@user.id)
+	  metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted,  :selected_num => @selected_num}
+    
     respond_with(@post, :api_template => :render_post, :meta => metadata)  	
   end
 
@@ -134,9 +135,11 @@ class PostsController < ApiController
                                    )
 
     if (!(@user.voted_up_on? @post))   
-    
+      @selNum = @selected_num.to_i
       @post.vote(:voter => @user)
-      case @selected_num.to_i
+      @post.selections.create!(:user_id => @user.id, :selected_item => @selNum)
+
+      case @selNum
         when 0
           @post.vote_count_1 = @post.vote_count_1 + 1
         when 1

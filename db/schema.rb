@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408122646) do
+ActiveRecord::Schema.define(:version => 20130503173305) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
@@ -61,6 +61,12 @@ ActiveRecord::Schema.define(:version => 20130408122646) do
   end
 
   add_index "posts", ["category_code"], :name => "index_posts_on_category_code"
+
+  create_table "selections", :force => true do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.integer "selected_item", :default => -1
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",                  :default => ""

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   acts_as_api
   acts_as_voter
   has_many :posts, dependent: :destroy
+  has_many :selections
+  has_many :posts, :through => :selections
 
   api_accessible :render_user do |t|
     t.add :id

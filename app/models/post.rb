@@ -19,6 +19,8 @@ class Post < ActiveRecord::Base
   has_attached_file :photo4, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
 	
   has_many :comments, dependent: :destroy, :order => "created_at ASC"
+  has_many :selections
+  has_many :users, :through => :selections
 
   api_accessible :render_post do |t| 
   	t.add :id
@@ -65,6 +67,20 @@ class Post < ActiveRecord::Base
     t.add :name
     t.add :imei
     t.add :isBombed
+  end
+
+  def getSelectedNum (user_id)
+
+      @selection = Selection.where("post_id = ? and user_id = ?", self.id, user_id)
+      if (@selection.length ==0 || @selection.nil?)
+        return -1
+      else
+        if (@selection.first.selected_item.nil?)
+          return -1
+        else
+          return @selection.first.selected_item
+        end
+      end
   end
 
   def name
