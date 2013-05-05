@@ -12,6 +12,25 @@ class UsersController < ApiController
     end
   end
 
+  def update
+    @user = User.getUserInfo(params[:imei])
+    @profile = params[:profile]
+    @intro = params[:intro]
+    
+    if (@profile.nil?)
+      @user.update_attributes(:intro => @intro) 
+    else
+      @user.update_attributes(:profile => @profile, :intro => @intro) 
+    end
+
+    if (@user.save)
+      metadata = {:success => true, :message=>"success to get user."}
+      render :json=>{:intro => @user.intro, :profile_thumbnail_url => @user.profile_thumbnail_url, :success => true, :result_code => 0, :message=>"success to update user."}
+    else
+      render :json=>{:success => false, :result_code => 2, :message=>"fail to update user."}
+    end
+  end
+
   def checkUniqueness
     @name = params[:name]
     if (User.uniqueName?(@name))
