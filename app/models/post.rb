@@ -62,6 +62,10 @@ class Post < ActiveRecord::Base
     t.add :photo2_thumb_path
     t.add :photo3_thumb_path
     t.add :photo4_thumb_path
+    t.add :item_description_1
+    t.add :item_description_2
+    t.add :item_description_3
+    t.add :item_description_4
     t.add :total_comments
     t.add :profile_thumbnail_url
     t.add :name
