@@ -129,7 +129,6 @@ class PostsController < ApiController
     end
 
   	@comment = @post.comments.build(:content => params[:content],
-                                   :selected_num => @selected_num,
                                    :imei => @imei
                                    )
 
