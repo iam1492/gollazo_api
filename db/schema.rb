@@ -11,16 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503173305) do
+ActiveRecord::Schema.define(:version => 20130506142920) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
     t.integer  "post_id"
-    t.integer  "selected_num"
     t.integer  "user_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.string   "imei",         :default => ""
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "imei",       :default => ""
   end
 
   create_table "posts", :force => true do |t|
