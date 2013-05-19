@@ -18,6 +18,7 @@ class Post < ActiveRecord::Base
   has_attached_file :photo3, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
   has_attached_file :photo4, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
 	
+  has_many :items, dependent: :destroy, :order => "id ASC"
   has_many :comments, dependent: :destroy, :order => "created_at ASC"
   has_many :selections
   has_many :users, :through => :selections
@@ -27,24 +28,13 @@ class Post < ActiveRecord::Base
   	t.add :category_code
   	t.add :description
   	t.add :title
-    t.add :vote_count_1
-    t.add :vote_count_2
-    t.add :vote_count_3
-    t.add :vote_count_4
     t.add :rank
-    t.add :photo1_path
-    t.add :photo2_path
-    t.add :photo3_path
-    t.add :photo4_path
     t.add :total_comments
     t.add :comments
     t.add :profile_thumbnail_url
     t.add :name
     t.add :imei
-    t.add :item_description_1
-    t.add :item_description_2
-    t.add :item_description_3
-    t.add :item_description_4
+    t.add :items, :template => :render_item
     t.add :isBombed
   end
 
