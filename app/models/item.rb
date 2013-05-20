@@ -4,18 +4,20 @@ class Item < ActiveRecord::Base
   acts_as_api		  
   acts_as_votable
 
-  has_attached_file :photo, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
+  has_attached_file :photo, 
+                    :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, 
+                    :default_url => ""
 
   belongs_to :post
 
   api_accessible :render_item do |t| 
   	t.add :id
     t.add :description
-    t.add :score
     t.add :photo_path
     t.add :photo_medium_path
     t.add :photo_thumb_path
     t.add :upvote_count
+    t.add :downvote_count
   end
 
   def photo_path
@@ -42,4 +44,9 @@ class Item < ActiveRecord::Base
   def upvote_count
   	self.upvotes.size
   end
+
+  def downvote_count
+    self.downvotes.size
+  end
+
 end

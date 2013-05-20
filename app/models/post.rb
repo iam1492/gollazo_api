@@ -43,19 +43,8 @@ class Post < ActiveRecord::Base
   	t.add :category_code
   	t.add :description
   	t.add :title
-    t.add :vote_count_1
-    t.add :vote_count_2
-    t.add :vote_count_3
-    t.add :vote_count_4
     t.add :rank
-    t.add :photo1_thumb_path
-    t.add :photo2_thumb_path
-    t.add :photo3_thumb_path
-    t.add :photo4_thumb_path
-    t.add :item_description_1
-    t.add :item_description_2
-    t.add :item_description_3
-    t.add :item_description_4
+    t.add :items, :template => :render_item
     t.add :total_comments
     t.add :profile_thumbnail_url
     t.add :name

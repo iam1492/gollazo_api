@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  
   def create 
   	@item = Item.new(params[:item])
 
@@ -63,12 +64,4 @@ class ItemsController < ApplicationController
     end
   end
 
-  def upvote_count
-  	@id = params[:id]
-  	@item = Item.find(@id)  	
-  	@vote_count = @item.upvotes.size
-
-  	render :json=>{:success => true, :message=>"success to vote", :vote_count => @vote_count}
-    return
-  end
 end
