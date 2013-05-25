@@ -121,7 +121,6 @@ class PostsController < ApiController
   def add_reply
   	@post = Post.find(params[:id])
     @imei = params[:imei]
-    @selected_num = params[:selected_num]
     @user = User.getUserInfo(@imei)
 
     if (@user.nil?)
@@ -129,31 +128,8 @@ class PostsController < ApiController
       return      
     end
 
-  	@comment = @post.comments.build(:content => params[:content],
-                                   :imei => @imei
-                                   )
-
-    if (!(@user.voted_up_on? @post))   
-      @selNum = @selected_num.to_i
-      @post.vote(:voter => @user)
-      @post.selections.create!(:user_id => @user.id, :selected_item => @selNum)
-
-      case @selNum
-        when 0
-          @post.vote_count_1 = @post.vote_count_1 + 1
-        when 1
-          @post.vote_count_2 = @post.vote_count_2 + 1
-        when 2
-          @post.vote_count_3 = @post.vote_count_3 + 1
-        when 3
-          @post.vote_count_4 = @post.vote_count_4 + 1
-        else
-          ;
-      end
-    else
+  	@comment = @post.comments.build(:content => params[:content], :imei => @imei)
     
-    end
-
   	if @post.save 
   	    render :json => {:success => true, :result_code => 0, :comment => @comment, :message => "succeed to create comment"}
   	else

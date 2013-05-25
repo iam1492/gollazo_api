@@ -4,7 +4,6 @@ class Post < ActiveRecord::Base
   				  :rank,
   				  :photo1, :photo2, :photo3, :photo4,
             :imei,
-            :item_count,
             :item_description_1, :item_description_2, :item_description_3, :item_description_4,
             :isBombed
 
@@ -36,6 +35,7 @@ class Post < ActiveRecord::Base
     t.add :imei
     t.add :items, :template => :render_item
     t.add :isBombed
+    t.add :item_count
   end
 
   api_accessible :render_post_list do |t| 
@@ -50,6 +50,7 @@ class Post < ActiveRecord::Base
     t.add :name
     t.add :imei
     t.add :isBombed
+    t.add :item_count
   end
 
   def getSelectedNum (user_id)
@@ -117,87 +118,7 @@ class Post < ActiveRecord::Base
     self.comments.count
   end
 
-  def photo1_path
-  	if (self.photo1.nil?)
-  		return nil
-  	end
-  	self.photo1.url
-  end
-
-  def photo1_medium_path
-  	if (self.photo1.nil?)
-  		return nil
-  	end
-  	self.photo1.url(:medium)  	
-  end
-
-  def photo1_thumb_path
-  	if (self.photo1.nil?)
-  		return nil
-  	end
-  	self.photo1.url(:thumb)  	
-  end
-
-  def photo2_path
-  	if (self.photo2.nil?)
-  		return nil
-  	end
-  	self.photo2.url
-  end
-
-  def photo2_medium_path
-  	if (self.photo2.nil?)
-  		return nil
-  	end
-  	self.photo2.url(:medium)  	
-  end
-
-  def photo2_thumb_path
-  	if (self.photo2.nil?)
-  		return nil
-  	end
-  	self.photo2.url(:thumb)  	
-  end
-
-  def photo3_path
-  	if (self.photo3.nil?)
-  		return nil
-  	end
-  	self.photo3.url
-  end
-
-  def photo3_medium_path
-  	if (self.photo3.nil?)
-  		return nil
-  	end
-  	self.photo3.url(:medium)  	
-  end
-
-  def photo3_thumb_path
-  	if (self.photo3.nil?)
-  		return nil
-  	end
-  	self.photo3.url(:thumb)  	
-  end
-
-  def photo4_path
-  	if (self.photo4.nil?)
-  		return nil
-  	end
-  	self.photo4.url
-  end
-
-  def photo4_medium_path
-  	if (self.photo4.nil?)
-  		return nil
-  	end
-  	self.photo4.url(:medium)  	
-  end
-
-  def photo4_thumb_path
-  	if (self.photo4.nil?)
-  		return nil
-  	end
-  	self.photo4.url(:thumb)  	
+  def item_count
+    self.items.count
   end
 end
