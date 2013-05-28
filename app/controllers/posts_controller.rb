@@ -4,7 +4,7 @@ class PostsController < ApiController
   	@post = Post.new(params[:post])
 
     if @post.save
-      render :json=>{:success => true, :message=>"success to create new post."}
+      render :json=>{:success => true, :post_id => @post.id, :message=>"success to create new post."}
       return
     else
       render :json=>{:success => false, :message=>"fail to create new post."}
@@ -117,7 +117,7 @@ class PostsController < ApiController
       return   
     end
   end
-
+ 
   def add_reply
   	@post = Post.find(params[:id])
     @imei = params[:imei]
@@ -129,7 +129,7 @@ class PostsController < ApiController
     end
 
   	@comment = @post.comments.build(:content => params[:content], :imei => @imei)
-    
+
   	if @post.save 
   	    render :json => {:success => true, :result_code => 0, :comment => @comment, :message => "succeed to create comment"}
   	else
