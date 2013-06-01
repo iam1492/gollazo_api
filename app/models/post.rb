@@ -2,20 +2,13 @@ class Post < ActiveRecord::Base
   attr_accessible :category_code, :description, :title,
   				  :vote_count_1, :vote_count_2, :vote_count_3, :vote_count_4, 
   				  :rank,
-  				  :photo1, :photo2, :photo3, :photo4,
             :imei,
-            :item_description_1, :item_description_2, :item_description_3, :item_description_4,
             :isBombed
 
   acts_as_api		  
   acts_as_votable
 
   self.per_page = 20
-
-  has_attached_file :photo1, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo2, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo3, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
-  has_attached_file :photo4, :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, :default_url => ""
 	
   has_many :items, dependent: :destroy, :order => "id ASC"
   has_many :comments, dependent: :destroy, :order => "created_at ASC"
@@ -27,7 +20,6 @@ class Post < ActiveRecord::Base
   	t.add :category_code
   	t.add :description
   	t.add :title
-    t.add :rank
     t.add :total_comments
     t.add :comments
     t.add :profile_thumbnail_url
@@ -36,6 +28,7 @@ class Post < ActiveRecord::Base
     t.add :items, :template => :render_item
     t.add :isBombed
     t.add :item_count
+    t.add :total_vote
   end
 
   api_accessible :render_post_list do |t| 
@@ -43,7 +36,6 @@ class Post < ActiveRecord::Base
   	t.add :category_code
   	t.add :description
   	t.add :title
-    t.add :rank
     t.add :items, :template => :render_item
     t.add :total_comments
     t.add :profile_thumbnail_url
@@ -51,18 +43,19 @@ class Post < ActiveRecord::Base
     t.add :imei
     t.add :isBombed
     t.add :item_count
+    t.add :total_vote
   end
 
   def getSelectedNum (user_id)
 
       @selection = Selection.where("post_id = ? and user_id = ?", self.id, user_id)
       if (@selection.length ==0 || @selection.nil?)
-        return -1
+        return ""
       else
-        if (@selection.first.selected_item.nil?)
-          return -1
+        if (@selection.first.selected_items.nil?)
+          return ""
         else
-          return @selection.first.selected_item
+          return @selection.first.selected_items
         end
       end
   end
@@ -112,6 +105,14 @@ class Post < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  def total_vote
+    count = 0
+    self.items.each do |item| 
+      count += item.upvote_count
+    end
+    count
   end
 
   def total_comments

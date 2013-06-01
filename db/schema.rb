@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130519074016) do
+ActiveRecord::Schema.define(:version => 20130601035831) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
@@ -38,37 +38,16 @@ ActiveRecord::Schema.define(:version => 20130519074016) do
     t.integer  "category_code"
     t.string   "title"
     t.string   "description"
-    t.integer  "vote_count_1",        :default => 0
-    t.integer  "vote_count_2",        :default => 0
-    t.integer  "vote_count_3",        :default => 0
-    t.integer  "vote_count_4",        :default => 0
-    t.string   "rank"
+    t.integer  "vote_count_1",  :default => 0
+    t.integer  "vote_count_2",  :default => 0
+    t.integer  "vote_count_3",  :default => 0
+    t.integer  "vote_count_4",  :default => 0
     t.integer  "user_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.boolean  "isBombed",            :default => false
-    t.string   "photo1_file_name"
-    t.string   "photo1_content_type"
-    t.integer  "photo1_file_size"
-    t.datetime "photo1_updated_at"
-    t.string   "photo2_file_name"
-    t.string   "photo2_content_type"
-    t.integer  "photo2_file_size"
-    t.datetime "photo2_updated_at"
-    t.string   "photo3_file_name"
-    t.string   "photo3_content_type"
-    t.integer  "photo3_file_size"
-    t.datetime "photo3_updated_at"
-    t.string   "photo4_file_name"
-    t.string   "photo4_content_type"
-    t.integer  "photo4_file_size"
-    t.datetime "photo4_updated_at"
-    t.string   "imei",                :default => ""
-    t.string   "item_description_1",  :default => ""
-    t.string   "item_description_2",  :default => ""
-    t.string   "item_description_3",  :default => ""
-    t.string   "item_description_4",  :default => ""
-    t.integer  "item_count",          :default => 0
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "isBombed",      :default => false
+    t.string   "imei",          :default => ""
+    t.integer  "item_count",    :default => 0
   end
 
   add_index "posts", ["category_code"], :name => "index_posts_on_category_code"
@@ -76,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20130519074016) do
   create_table "selections", :force => true do |t|
     t.integer "user_id"
     t.integer "post_id"
-    t.integer "selected_item", :default => -1
+    t.string  "selected_items", :default => ""
   end
 
   create_table "users", :force => true do |t|

@@ -41,6 +41,15 @@ class Item < ActiveRecord::Base
   	self.photo.url(:thumb)  	
   end
 
+  def up_vote (user)
+    @success = self.vote :voter => user, :vote => 'like'
+    if (@success)
+      return true
+    else
+      return false
+    end
+  end
+
   def upvote_count
   	self.upvotes.size
   end

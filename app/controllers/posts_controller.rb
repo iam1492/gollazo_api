@@ -34,6 +34,7 @@ class PostsController < ApiController
     end
 
     @user = User.cachedUserInfo(@imei)
+
     if (@user.nil?)
       @user = User.getUserInfo(@imei);
     end
@@ -53,6 +54,34 @@ class PostsController < ApiController
     metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted,  :selected_num => @selected_num}
     
     respond_with(@post, :api_template => :render_post, :meta => metadata)  	
+  end
+
+  def votePost
+    @post = Post.find(params[:id])
+    @imei = params[:imei]
+    @user = User.getUserInfo(@imei)
+    @selected_nums = params[:selected_nums]
+
+    if (@user.voted_up_on? @post)
+      render :json=>{:success => false, :message=>"already voted"}
+    else
+      #vote here
+      
+      seletedNumsArray = @selected_nums.split(/,/)
+
+      seletedNumsArray.each do |num|
+        item = @post.items.find(num.to_i)
+        if (item.up_vote @user)
+          logger.debug "vote to : #{num}"
+        else
+          render :json=>{:success => false, :message=>"already voted"}
+          break
+        end
+      end
+      @post.vote(:voter => @user)
+
+      render :json=>{:success => true, :message=>"vote success"}
+    end
   end
 
   def getPostsByCategory 

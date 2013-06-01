@@ -14,6 +14,7 @@ GollazoApi::Application.routes.draw do
   match 'posts/bomb_post(.format)' => "posts#bombPost", :via => :post
   match 'posts/get_post_by_imei(.format)' => "posts#getPostsByImei", :via => :get
   match 'posts/get_voted_post_by_imei(.format)' => "posts#getVotedPosts", :via => :get
+  match 'posts/vote_post(.format)' => "posts#votePost", :via => :post 
 
   match 'items(.json)' => "items#create", :via => :post
   match 'items/up_vote(.json)' => "items#up_vote", :via => :post
