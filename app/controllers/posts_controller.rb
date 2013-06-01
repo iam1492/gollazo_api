@@ -68,9 +68,6 @@ class PostsController < ApiController
       #vote here
       
       @post.selections.create!(:user_id => @user.id, :selected_items => @selected_nums)
-      if(!@post.save)
-        render :json=>{:success => false, :message=>"vote failed to save"}
-      end
 
       seletedNumsArray = @selected_nums.split(/,/)
 
