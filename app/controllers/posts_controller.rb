@@ -50,8 +50,8 @@ class PostsController < ApiController
 	  end
 
     @has_voted = @user.voted_up_on?(@post)
-    @selected_num = @post.getSelectedNum (@user.id)
-    metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted,  :selected_num => @selected_num}
+    @selected_nums = @post.getSelectedNum (@user.id)
+    metadata = {:success => true, :message=>"success to get post detail.", :has_voted => @has_voted,  :selected_num => @selected_nums}
     
     respond_with(@post, :api_template => :render_post, :meta => metadata)  	
   end
@@ -67,9 +67,15 @@ class PostsController < ApiController
     else
       #vote here
       
+      @post.selections.create!(:user_id => @user.id, :selected_items => @selected_nums)
+      if(!@post.save)
+        render :json=>{:success => false, :message=>"vote failed to save"}
+      end
+
       seletedNumsArray = @selected_nums.split(/,/)
 
       seletedNumsArray.each do |num|
+
         item = @post.items.find(num.to_i)
         if (item.up_vote @user)
           logger.debug "vote to : #{num}"
@@ -78,6 +84,7 @@ class PostsController < ApiController
           break
         end
       end
+    
       @post.vote(:voter => @user)
 
       render :json=>{:success => true, :message=>"vote success"}
