@@ -89,7 +89,9 @@ class PostsController < ApiController
   end
 
   def getPostsByCategory 
-  	@posts = Post.where("category_code = ?", params[:category_code]).page(params[:page]).order('created_at DESC')
+    @category_array = params[:category_code].split(/,/)
+
+  	@posts = Post.where(:category_code => @category_array).page(params[:page]).order('created_at DESC')
   	if (@posts.nil?)
   		render :json=>{:success => false, :message=>"fail to get posts."}
   	else
