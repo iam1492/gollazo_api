@@ -2,7 +2,7 @@ class UsersController < ApiController
 
 	def create
   	@user = User.new(params[:user])
-
+    
     if @user.save
       render :json=>{:success => true, :message=>"success to create"}
       return

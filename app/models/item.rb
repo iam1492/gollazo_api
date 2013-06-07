@@ -5,7 +5,7 @@ class Item < ActiveRecord::Base
   acts_as_votable
 
   has_attached_file :photo, 
-                    :styles => { :original => "720x", :medium => "480x", :thumb => "100x100>" }, 
+                    :styles => { :original => "720x", :medium => "480x", :thumb => "300x300>" }, 
                     :default_url => ""
 
   belongs_to :post
