@@ -14,7 +14,9 @@ class PostsController < ApiController
 
   def update
     @post = Post.find(params[:id])
-    @post.update_attributes(:description => params[:description], :title => params[:title])
+    @post.update_attributes(:category_code => params[:category_code], 
+                            :description => params[:description], 
+                            :title => params[:title])
 
     if @post.save
       render :json=>{:success => true, :result_code => 0, :message=>"success to update post."}
