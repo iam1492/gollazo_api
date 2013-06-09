@@ -129,7 +129,7 @@ class PostsController < ApiController
     end
     @votables = @user.find_votes.page(params[:page]).order('created_at DESC')
     @posts_ids = @votables.map{|post| post.votable_id}
-    @posts = Post.find(@posts_ids)
+    @posts = Post.find_all_by_id(@posts_ids)
     if (@posts.nil?)
       render :json=>{:success => false, :message=>"fail to get posts."}
     else
