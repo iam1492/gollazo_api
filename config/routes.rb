@@ -1,6 +1,7 @@
 GollazoApi::Application.routes.draw do
 
   match 'users(.format)' => "users#create", :via => :post 
+  match 'users(.format)' => "users#destroy", :via => :delete
   match 'users/update(.format)' => "users#update", :via => :post 
   match 'users/get_userinfo(.format)' => "users#getUserInfo", :via => :get
   match 'users/get_user_list(.format)' => "users#getUserList", :via => :get
