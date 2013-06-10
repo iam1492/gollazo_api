@@ -84,7 +84,7 @@ class PostsController < ApiController
         end
       end
     
-      @post.vote(:voter => @user)
+      @post.vote(:voter => @user)#, :vote_scope => 'post')
 
       render :json=>{:success => true, :message=>"vote success"}
     end
@@ -127,7 +127,7 @@ class PostsController < ApiController
     if (@user.nil?)
       @user = User.getUserInfo(@imei);
     end
-    @votables = @user.find_votes.page(params[:page]).order('created_at DESC')
+    @votables = @user.find_votes(:votable_type => 'Post').page(params[:page]).order('created_at DESC')
     @posts_ids = @votables.map{|post| post.votable_id}
     @posts = Post.find_all_by_id(@posts_ids)
     if (@posts.nil?)
