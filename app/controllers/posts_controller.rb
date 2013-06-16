@@ -121,6 +121,11 @@ class PostsController < ApiController
     end
   end
 
+  def getPostsByImeiCount
+    count = Post.count(:conditions => "imei LIKE \'#{params[:imei]}\'")
+    render :json=>{:success => true, :count => count}
+  end
+
   def getVotedPosts
     @imei = params[:imei]
     @user = User.cachedUserInfo(@imei)
@@ -135,6 +140,22 @@ class PostsController < ApiController
     else
       metadata = {:success => true, :message=>"success to get posts.", :posts_count => @posts.count}
       respond_with(@posts, :api_template => :render_post_list, :root => :posts, :meta => metadata)
+    end
+  end
+
+  def getVotedPostsCount
+    @imei = params[:imei]
+    @user = User.cachedUserInfo(@imei)
+    if (@user.nil?)
+      @user = User.getUserInfo(@imei);
+    end
+    logger.debug @user
+    @votables = @user.find_votes(:votable_type => 'Post').order('created_at DESC')
+
+    if (@votables.nil?)
+      render :json=>{:success => false, :message=>"fail to get count."}
+    else
+      render :json=>{:success => true, :count => @votables.size}
     end
   end
 
