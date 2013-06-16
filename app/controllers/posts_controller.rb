@@ -121,11 +121,6 @@ class PostsController < ApiController
     end
   end
 
-  def getPostsByImeiCount
-    count = Post.count(:conditions => "imei LIKE \'#{params[:imei]}\'")
-    render :json=>{:success => true, :count => count}
-  end
-
   def getVotedPosts
     @imei = params[:imei]
     @user = User.cachedUserInfo(@imei)
@@ -143,20 +138,16 @@ class PostsController < ApiController
     end
   end
 
-  def getVotedPostsCount
+  def getMenuCount
     @imei = params[:imei]
     @user = User.cachedUserInfo(@imei)
     if (@user.nil?)
       @user = User.getUserInfo(@imei);
     end
-    logger.debug @user
-    @votables = @user.find_votes(:votable_type => 'Post').order('created_at DESC')
+    vote_count = @user.find_votes(:votable_type => 'Post').size
+    post_count = Post.count(:conditions => "imei LIKE \'#{params[:imei]}\'")
 
-    if (@votables.nil?)
-      render :json=>{:success => false, :message=>"fail to get count."}
-    else
-      render :json=>{:success => true, :count => @votables.size}
-    end
+    render :json=>{:success => true, :vote_count => vote_count, :post_count => post_count}
   end
 
   def bombPost
