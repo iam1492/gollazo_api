@@ -27,7 +27,7 @@ class UsersController < ApiController
     @user = User.getUserInfo(params[:imei])
     @profile = params[:profile]
     @intro = params[:intro]
-    
+     
     if (@profile.nil?)
       @user.update_attributes(:intro => @intro) 
     else
