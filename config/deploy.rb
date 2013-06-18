@@ -1,6 +1,6 @@
 require "bundler/capistrano"
-
-server "14.63.162.85", :web, :app, :db, primary: true
+  
+server "14.63.185.146", :web, :app, :db, primary: true
 
 set :application, "gollazo_api"
 set :user, "deployer"
