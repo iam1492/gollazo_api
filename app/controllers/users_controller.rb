@@ -54,7 +54,7 @@ class UsersController < ApiController
   def getUserInfo
 
   	@imei = params[:imei]
-  	@user = User.cachedUserInfo(@imei)
+  	@user = User.getUserInfo(@imei)
 
   	if (@user.nil?)
       render :json=>{:success => false, :message=>"fail to get user."}
