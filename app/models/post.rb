@@ -29,6 +29,7 @@ class Post < ActiveRecord::Base
     t.add :isBombed
     t.add :item_count
     t.add :total_vote
+    t.add :created_at
   end
 
   api_accessible :render_post_list do |t| 
