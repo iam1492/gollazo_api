@@ -23,6 +23,41 @@ class UsersController < ApiController
     end
   end
 
+  def devModifyIMEI
+    @user = User.getUserInfo(params[:imei])
+    new_imei = params[:new_imei]
+
+    if (!@user.nil?)
+      if (@user.update_attributes(:imei => new_imei))
+        render :json=>{:success => true, :message=>"success"}
+      else
+        render :json=>{:success => false, :message=>"fail to update"}
+      end
+    else
+      render :json=>{:success => false, :message=>"user is nil"}
+    end
+  end
+
+  def updateNickname
+    @imei = params[:imei]
+    @new_nick_name = params[:nickname]
+
+    @user = User.getUserInfo(@imei)
+    
+    if (@user.nil?)
+      render :json=>{:success => false, :message=>"fail to change nickname. no user found"}
+      return      
+    end
+
+    if (@user.update_attributes(:name => @new_nick_name))
+      render :json=>{:success => true, :message=>"success to change nickname"}
+      return
+    else
+      render :json=>{:success => false, :message=>"fail to change nickname"}
+      return      
+    end
+  end
+
   def update
     @user = User.getUserInfo(params[:imei])
     @profile = params[:profile]
