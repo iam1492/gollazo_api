@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130623094334) do
+ActiveRecord::Schema.define(:version => 20130623145240) do
 
   create_table "comments", :force => true do |t|
     t.string   "content"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20130623094334) do
     t.datetime "profile_updated_at"
   end
 
-  add_index "users", ["imei"], :name => "index_users_on_imei"
+  add_index "users", ["imei"], :name => "index_users_on_imei", :unique => true
 
   create_table "votes", :force => true do |t|
     t.integer  "votable_id"
