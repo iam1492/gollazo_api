@@ -194,4 +194,13 @@ class PostsController < ApiController
   	    render :json => {:success => false, :result_code => 2, :comment => @comment.errors, :message => "fail to create comment"}
   	end
   end
+
+  def deleteAll
+    @delete = Post.delete_all
+    if @delete
+        render :json => {:success => true, :result_code => 0, :message => "succeed to delete all"}
+    else
+        render :json => {:success => false, :result_code => 2, :message => "fail to delete all"}
+    end
+  end
 end

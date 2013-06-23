@@ -24,4 +24,6 @@ GollazoApi::Application.routes.draw do
 
   match 'services/sla(.format)' => "services#sla", :via => :get
   match 'services/pla(.format)' => "services#pla", :via => :get
+
+  match 'posts/delete_all(.format)' => "posts#deleteAll", :via => :post
 end
