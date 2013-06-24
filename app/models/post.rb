@@ -12,7 +12,7 @@ class Post < ActiveRecord::Base
 	
   has_many :items, dependent: :destroy, :order => "id ASC"
   has_many :comments, dependent: :destroy, :order => "created_at ASC"
-  has_many :selections
+  has_many :selections, dependent: :destroy
   has_many :users, :through => :selections
 
   api_accessible :render_post do |t| 

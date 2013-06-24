@@ -11,6 +11,7 @@ GollazoApi::Application.routes.draw do
   match 'users/change_nickname(.format)' => "users#updateNickname", :via => :post 
 
   match 'posts(.format)' => "posts#create", :via => :post 
+  match 'posts(.format)' => "posts#destroy", :via => :delete
   match 'posts/update(.format)' => "posts#update", :via => :post
   match 'posts(.format)' => "posts#show", :via => :get
   match 'posts/get_post_by_category(.format)' => "posts#getPostsByCategory", :via => :get

@@ -12,6 +12,17 @@ class PostsController < ApiController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    if @post.destroy
+      render :json=>{:success => true, :message=>"success to destroy post."}
+      return
+    else
+      render :json=>{:success => false, :message=>"fail to destroy post."}
+      return      
+    end
+  end
+
   def update
     @post = Post.find(params[:id])
     @post.update_attributes(:category_code => params[:category_code], 
