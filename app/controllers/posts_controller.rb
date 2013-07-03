@@ -149,6 +149,25 @@ class PostsController < ApiController
     end
   end
 
+  def getVotedUsers
+    @post = Post.find(params[:id])
+
+    if (@post.nil?)
+      render :json=>{:success => false, :message=>"fail to get posts."}
+    end
+
+    @voters = @post.find_votes(:voter_type => 'User').page(params[:page]).order('created_at DESC')
+    @users_ids = @voters.map{|user| user.voter_id}
+    @users = User.find_all_by_id(@users_ids)
+
+    if (@users.nil?)
+      render :json=>{:success => false, :message=>"fail to get users."}
+    else
+      metadata = {:success => true, :message=>"success to get voted users.", :users_count => @users.count}
+      respond_with(@users, :api_template => :render_user, :root => :users, :meta => metadata)
+    end
+  end
+
   def getMenuCount
     @imei = params[:imei]
     @user = User.cachedUserInfo(@imei)
