@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :imei, :name, :profile, :intro
+  attr_accessor   :selection
+  attr_accessible :imei, :name, :profile, :intro, :selection
   has_attached_file :profile, :styles => { :original => "720x", :medium => "200x200>", :thumb => "100x100>" }
 
   after_save    :expire_user_cache
@@ -18,6 +19,16 @@ class User < ActiveRecord::Base
   	t.add :profile_thumbnail_url
     t.add :profile_url
     t.add :intro
+  end
+
+  api_accessible :render_user_with_selection do |t|
+    t.add :id
+    t.add :imei
+    t.add :name
+    t.add :profile_thumbnail_url
+    t.add :profile_url
+    t.add :intro
+    t.add :selection
   end
 
   def profile_url

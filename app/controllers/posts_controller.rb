@@ -160,11 +160,15 @@ class PostsController < ApiController
     @users_ids = @voters.map{|user| user.voter_id}
     @users = User.find_all_by_id(@users_ids)
 
+    @users.each do |u| 
+      u.selection = @post.getSelectedNum(u.id)  
+    end
+    
     if (@users.nil?)
       render :json=>{:success => false, :message=>"fail to get users."}
     else
       metadata = {:success => true, :message=>"success to get voted users.", :users_count => @users.count}
-      respond_with(@users, :api_template => :render_user, :root => :users, :meta => metadata)
+      respond_with(@users, :api_template => :render_user_with_selection, :root => :users, :meta => metadata)
     end
   end
 
