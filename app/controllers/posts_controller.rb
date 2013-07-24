@@ -209,6 +209,19 @@ class PostsController < ApiController
       return   
     end
   end
+
+  def cancelBomb
+    @post_id = params[:id]
+    @post = Post.find(@post_id)  
+    @post.isBombed = false
+    if @post.save
+      render :json=>{:success => true, :result_code => 0, :message=>"success to cancel bomb"}
+      return     
+    else
+      render :json=>{:success => false, :result_code => 2, :message=>"fail to cancel bomb"}
+      return     
+    end
+  end
  
   def add_reply
   	@post = Post.find(params[:id])
