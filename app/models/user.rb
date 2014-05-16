@@ -1,11 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessor   :selection
-  attr_accessible :imei, :name, :profile, :intro, :selection
+  # attr_accessible :imei, :name, :profile, :intro, :selection
   has_attached_file :profile, :styles => { :original => "720x", :medium => "200x200>", :thumb => "100x100>" }
-
-  after_save    :expire_user_cache
-  after_destroy :expire_user_cache
-
+  do_not_validate_attachment_file_type :profile
   acts_as_api
   acts_as_voter
   
@@ -14,20 +11,22 @@ class User < ActiveRecord::Base
 
   api_accessible :render_user do |t|
     t.add :id
-    t.add :imei
   	t.add :name
   	t.add :profile_thumbnail_url
     t.add :profile_url
     t.add :intro
+    t.add :uid
+    t.add :email
   end
 
   api_accessible :render_user_with_selection do |t|
     t.add :id
-    t.add :imei
     t.add :name
     t.add :profile_thumbnail_url
     t.add :profile_url
     t.add :intro
+    t.add :uid
+    t.add :email
     t.add :selection
   end
 
@@ -43,20 +42,6 @@ class User < ActiveRecord::Base
       return nil
     end
     self.profile.url(:thumb)
-  end
-
-  def self.getUserInfo(_imei)
-    where("imei = ?", _imei).first
-  end
-
-  def self.cachedUserInfo(_imei)
-    Rails.cache.fetch("userinfo-#{_imei}") do
-      User.getUserInfo(_imei)
-    end
-  end
-
-  def expire_user_cache
-    Rails.cache.delete("userinfo-#{self.imei}")
   end
 
   def self.uniqueName?(_name)

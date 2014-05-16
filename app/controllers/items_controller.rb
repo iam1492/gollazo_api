@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
+  skip_before_filter  :verify_authenticity_token
   
   def create 
-  	@item = Item.new(params[:item])
+  	@item = Item.new(item_params)
 
     if @item.save
       render :json=>{:success => true, :message=>"success to create new item."}
@@ -62,6 +63,11 @@ class ItemsController < ApplicationController
       render :json=>{:success => false, :message=>"fail to vote."}
       return 
     end
+  end
+
+  private
+  def item_params
+    params.require(:item).permit(:description, :post_id, :photo)
   end
 
 end

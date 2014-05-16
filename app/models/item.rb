@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  attr_accessible :description, :post_id, :score, :photo
+  # attr_accessible :description, :post_id, :score, :photo
 
   acts_as_api		  
   acts_as_votable
@@ -7,7 +7,8 @@ class Item < ActiveRecord::Base
   has_attached_file :photo, 
                     :styles => { :original => "1080x", :medium => "480x", :thumb => "300x300>" }, 
                     :default_url => ""
-
+  do_not_validate_attachment_file_type :photo
+  # validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png"]
   belongs_to :post
 
   api_accessible :render_item do |t| 

@@ -1,56 +1,49 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :id, :imei, :content, :post_id
+  # attr_accessible :id, :imei, :content, :post_id
   belongs_to :post
 
   def nickname
-  	if (self.imei.nil?)
-      return ""
+  	user = User.find_by_uid(self.uid)
+
+    if (user.nil?)
+      user = User.find_by_uid('999')      
     end
     
-    @user = User.cachedUserInfo(self.imei)
-    if (@user.nil?)
-      @user = User.getUserInfo(self.imei);
-    end
-    
-    if (@user.nil?)
+    if (user.nil?)
       return ""
     end
 
-  	@user.name
+  	user.name
   end
 
   def selected_num
     @post = Post.find(self.post_id)
-    @user = User.cachedUserInfo(self.imei)
-    if (@user.nil?)
-      @user = User.getUserInfo(self.imei);
+    user = User.find_by_uid(self.uid)
+
+    if (user.nil?)
+      user = User.find_by_uid('999')      
     end
     
-    if (@user.nil?)
-      return -1
+    if (user.nil?)
+      return ""
     end
 
-    @selected_num = @post.getSelectedNum (@user.id)
+    @selected_num = @post.getSelectedNum (user.id)
     @selected_num
   end
 
   def profile_thumbnail_url
+    user = User.find_by_uid(self.uid)
     
-    if (self.imei.nil?)
-      return ""
+    if (user.nil?)
+      user = User.find_by_uid('999')      
     end
-    
-    @user = User.cachedUserInfo(self.imei)
-    logger.debug @user
-    if (@user.nil?)
-      @user = User.getUserInfo(self.imei);
-    end
-    
-    if (@user.nil?)
+
+    if (user.nil?)
       return ""
     end
 
-    @user.profile_thumbnail_url
+    user.profile_thumbnail_url
   end
 
   def as_json options=nil
