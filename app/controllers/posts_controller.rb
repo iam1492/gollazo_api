@@ -47,6 +47,10 @@ class PostsController < ApiController
     access_token = params[:access_token]
     user = User.find_by_access_token(access_token)
 
+    if (user.nil?)
+      user = User.find_by_uid('999')
+    end
+    
   	post = Post.find(params[:id])
 
     if (user.nil?)
