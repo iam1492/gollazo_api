@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
     t.add :intro
     t.add :uid
     t.add :email
+    t.add :access_token
   end
 
   api_accessible :render_user_with_selection do |t|
@@ -28,6 +29,7 @@ class User < ActiveRecord::Base
     t.add :uid
     t.add :email
     t.add :selection
+    t.add :access_token
   end
 
   def profile_url
