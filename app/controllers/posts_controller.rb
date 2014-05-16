@@ -106,7 +106,7 @@ class PostsController < ApiController
 
       unless post_user.nil?
         registration_ids= [post_user.device_id] # an array of one or more client registration IDs
-        options = {data: {type: 1, msg: '내 포스트를 골라줬어요!', 
+        options = {data: {type: 1, msg: 'Someone Like to your post', 
           post_id: post.id, description: post.description, 
           title: post.title, name: post.name, item_count: post.items.count}}
         response = gcm.send_notification(registration_ids, options)
@@ -274,7 +274,7 @@ class PostsController < ApiController
 
         unless post_user.nil?
           registration_ids= [post_user.device_id] # an array of one or more client registration IDs
-          options = {data: {type: 1, msg: '내 포스트에 댓글이 달렸습니다.', 
+          options = {data: {type: 1, msg: 'Someone comment to your post', 
             post_id: post.id, description: post.description, 
             title: post.title, name: post.name, item_count: post.items.count}}
           response = gcm.send_notification(registration_ids, options)  
