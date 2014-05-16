@@ -53,7 +53,7 @@ class UsersController < ApiController
 
       # logger.debug new_user.profile.to_s
       if new_user.save  
-        render :json=>{:success => true, :message=>"success to create new user"}
+        render :json=>{:success => true, :message=>"success to create new user", :access_token => new_token}
         return
       else
         render :json=>{:success => false, :message=>"fail to create new user"}
