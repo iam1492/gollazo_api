@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
   def nickname
   	user = User.find_by_uid(self.uid)
 
-    if (user.nil?)
+    if (user.nil? || self.uid.nil?)
       user = User.find_by_uid('999')      
     end
     
