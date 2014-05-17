@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessor   :selection
   # attr_accessible :imei, :name, :profile, :intro, :selection
-  has_attached_file :profile, :styles => { :original => "720x", :medium => "200x200>", :thumb => "100x100>" }
+  has_attached_file :profile, :styles => { :original => "720x", :medium => "200x200>", :thumb => "100x100>" }, :default_url => "/images/profile/missing.png"
   do_not_validate_attachment_file_type :profile
   acts_as_api
   acts_as_voter
