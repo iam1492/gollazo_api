@@ -64,7 +64,8 @@ class Post < ActiveRecord::Base
   def name
     user = User.find_by_uid(self.uid)
 
-    if (user.nil?)
+    if (user.nil? || self.uid.nil?)
+      logger.debug "user is null"
       user = User.find_by_uid('999')      
     end
     
@@ -79,7 +80,7 @@ class Post < ActiveRecord::Base
     
     user = User.find_by_uid(self.uid)
 
-    if (user.nil?)
+    if (user.nil? || self.uid.nil?)
       user = User.find_by_uid('999')      
     end
     
