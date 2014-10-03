@@ -1,0 +1,34 @@
+<% @posts.each do |post| %>
+	<div class="item_wrap">
+		<%= image_tag post.items[0].photo_path, class: 'img-responsive' %>
+		<div class="item_title_bar">
+			<div class="item_category">
+				전자기기  
+				<img src="/assets/category_<%= post.category_code %>.png"/>
+			</div>
+			<div class="item_text_wrap">
+				<div class="item_title"><%= post.title %></div>
+				<div class="item_title_bottom">
+					<div class="item_date"><%= post.created_at.to_formatted_s(:short) %></div>
+					<div class="item_gollazo_count">
+						<img src="/assets/icon_like.png" class="item_count_icon"/>
+						<%= post.total_vote %>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+<!-- 	
+<%= image_tag post.items[0].photo_path, class: 'item_image' %>	
+		<div class="item_title">
+			<div class="item_title_cateogry">
+				<img src="/assets/category_<%= post.category_code %>.png"/>
+			</div>
+			<div class="item_title_text">
+				<%= post.title %>
+			</div>
+			<div class="clear"></div>
+		</div> -->
+	</div>
+<% end %>
+<div class="clear"></div>

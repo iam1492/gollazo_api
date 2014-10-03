@@ -45,6 +45,7 @@ class Post < ActiveRecord::Base
     t.add :item_count
     t.add :total_vote
     t.add :uid
+    t.add :created_at
   end
 
   def getSelectedNum (user_id)

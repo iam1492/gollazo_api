@@ -3,7 +3,13 @@ class PostsController < ApiController
 
   skip_before_filter  :verify_authenticity_token
 
-  respond_to :json, :xml
+  respond_to :json, :xml, :html
+
+  def index
+  end
+
+
+
   def create 
     access_token = posts_param[:access_token]
 
@@ -51,22 +57,22 @@ class PostsController < ApiController
       user = User.find_by_uid('999')
     end
     
-  	post = Post.find(params[:id])
+  	@post = Post.find(params[:id])
 
     if (user.nil?)
       render :json=>{:success => false, :message=>"cannot not find user"}
       return
     end
 
-  	if (post.nil?)
+  	if (@post.nil?)
 	   render :json=>{:success => false, :message=>"cannot find post"}
 	   return      
 	  end
 
-    has_voted = user.voted_up_on?(post)
-    selected_nums = post.getSelectedNum (user.id)
+    has_voted = user.voted_up_on?(@post)
+    selected_nums = @post.getSelectedNum (user.id)
 
-    if post.isMyPost? user.uid
+    if @post.isMyPost? user.uid
       my_post = true
     else
       my_post = false
@@ -75,7 +81,7 @@ class PostsController < ApiController
     metadata = {:success => true, :message=>"success to get post detail.", 
       :has_voted => has_voted,  :selected_num => selected_nums, :my_post => my_post }
     
-    respond_with(post, :api_template => :render_post, :meta => metadata)  	
+    respond_with(@post, :api_template => :render_post, :meta => metadata)  	
   end
 
   def votePost
@@ -123,7 +129,7 @@ class PostsController < ApiController
     end
   end
 
-  def getPostsByCategory 
+  def list 
     category_params = params[:category_code];
 
     if (!category_params.nil?)
@@ -131,16 +137,16 @@ class PostsController < ApiController
     end
 
     if (category_array.nil?)
-  	  posts = Post.page(params[:page]).order('created_at DESC')
+  	  @posts = Post.page(params[:page]).order('created_at DESC')
     else
-      posts = Post.where(:category_code => category_array).page(params[:page]).order('created_at DESC')
+      @posts = Post.where(:category_code => category_array).page(params[:page]).order('created_at DESC')
     end
 
-  	if (posts.nil?)
+  	if (@posts.nil?)
   		render :json=>{:success => false, :message=>"fail to get posts."}
-  	else
-  		metadata = {:success => true, :message=>"success to get posts.", :posts_count => posts.count}
-  		respond_with(posts, :api_template => :render_post_list, :root => :posts, :meta => metadata)
+  	else    
+  		metadata = {:success => true, :message=>"success to get posts.", :posts_count => @posts.count}
+  		respond_with(@posts, :api_template => :render_post_list, :root => :posts, :meta => metadata)
   	end
   end
 

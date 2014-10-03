@@ -1,5 +1,7 @@
 GollazoApi::Application.routes.draw do
 
+  get "/" => "posts#index"
+
   get "attachments/create"
   match 'users(.format)' => "users#create", :via => :post 
   match 'users/login(.format)' => "users#login", :via => :post 
@@ -18,7 +20,7 @@ GollazoApi::Application.routes.draw do
   match 'posts/:id(.format)' => "posts#destroy", :via => :delete
   match 'posts/update(.format)' => "posts#update", :via => :post
   match 'posts(.format)' => "posts#show", :via => :get
-  match 'posts/get_post_by_category(.format)' => "posts#getPostsByCategory", :via => :get
+  match 'posts/get_post_by_category(.format)' => "posts#list", :via => :get
   match 'posts/add_comment(.format)' => "posts#add_reply", :via => :post 
   match 'posts/bomb_post(.format)' => "posts#bombPost", :via => :post
   match 'posts/cancel_bomb_post(.format)' => "posts#cancelBomb", :via => :post
